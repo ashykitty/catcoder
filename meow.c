@@ -26,44 +26,6 @@ static const char * const MEOWS[] = {
 	"mEOw"
 };
 
-static const char * const MEOW_LEFT[] = {
-	"me",
-	"mE",
-	"Me",
-	"ME",
-	"m-me",
-	"m-mE",
-	"m-Me",
-	"m-ME",
-	"M-me",
-	"M-mE",
-	"M-Me",
-	"M-ME",
-	"m-mee",
-	"m-meE",
-	"m-mEe",
-	"m-mEE"
-};
-
-static const char * const MEOW_RIGHT[] = {
-	"ow",
-	"oW",
-	"Ow",
-	"OW",
-	"oww",
-	"owW",
-	"oWw",
-	"oWW",
-	"Oww",
-	"OwW",
-	"OWw",
-	"OWW",
-	"oow",
-	"ooW",
-	"oOw",
-	"oOW"
-};
-
 char *join( int argc, char ** argv, size_t *arg_len)
 {
 	int i;
@@ -161,7 +123,6 @@ void encrypt( int argc, char ** argv)
 	for( i = 0; i < len-1; i++)
 	{
 		char c = text[i] < 128 ? text[i] : '?';
-		//printf("%s%s ", MEOW_LEFT[c>>4], MEOW_RIGHT[c&15]);
 		printf("%s %s ", MEOWS[c>>4], MEOWS[c&15]);
 	}
 	
