@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-/* meow translator by ashpurple 10/09/21 */
+/* meow translator 10/09/21 */
 
 #define WORD_SIZE 8
 #define INVALID_MSG "INVALID MEOW TEXT OWO"
