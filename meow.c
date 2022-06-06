@@ -114,7 +114,7 @@ void decrypt( int argc, char ** argv)
 
 void encrypt( int argc, char ** argv)
 {
-	unsigned char *text = NULL;
+	char *text = NULL;
 	size_t len = 0;
 	int i;
 	
