@@ -41,15 +41,15 @@ int invalid_character( char c)
 	return 1;
 }
 
-int match_meow( char *word)
+int match_meow( char *word, size_t len)
 {
 	int i;
 	for( i = 0; i < 16; i++)
-		if( strcmp( word, MEOWS[i]) == 0) return i;
+		if( strncmp( word, MEOWS[i], len) == 0) return i;
 	return -1;
 }
 
-int valid_meow( char *str)
+int valid_meow( char *str, size_t len)
 {
 	int i, words = 0;
 	char word[WORD_SIZE];
@@ -57,12 +57,12 @@ int valid_meow( char *str)
 
 	memset( word, 0, WORD_SIZE);
 
-	for( i = 0; i < strlen( str); i++)
+	for( i = 0; i < len; i++)
 	{
 		if( str[i] == ' ')
 		{
 			
-			if( match_meow( word) < 0)
+			if( match_meow( word, len) < 0)
 				return 0;
 
 			memset( word, 0, WORD_SIZE);
@@ -84,9 +84,9 @@ int valid_meow( char *str)
 	return words % 2 == 0;
 }
 
-void decrypt( char *str)
+void decrypt( char *str, size_t len)
 {
-	int i;
+	int i, words = 0;
 	
 	char word[WORD_SIZE];
 	char *ptr = word;
@@ -94,15 +94,15 @@ void decrypt( char *str)
 	
 	memset( word, 0, WORD_SIZE);
 	
-	for( i = 0; i < strlen( str); i++)
+	for( i = 0; i < len; i++)
 	{
 		if( str[i] == ' ')
 		{
-			int meow = match_meow( word);
+			int meow = match_meow( word, len);
 			
-			if( chr)
+			if( words++ % 2)
 			{
-				printf("%c", chr+meow);
+				printf("%c", meow+chr);
 				chr = 0;
 			} else {
 				chr = meow << 4;
@@ -117,35 +117,31 @@ void decrypt( char *str)
 	}	
 }
 
-void encrypt( char *str)
+void encrypt( char *str, size_t len)
 {
 	int i;
 		 
-	for( i = 0; i < strlen( str); i++)
+	for( i = 0; i < len; i++)
 	{
-		char c = str[i] < 128 ? str[i] : '?';
+		unsigned char c = (unsigned char)str[i];
 		printf("%s %s ", MEOWS[c>>4], MEOWS[c&15]);
 	}
-}
-
-void remove_newline( char *str)
-{
-	int i;
-	for( i = 0; i < strlen( str); i++)
-		if( str[i] == '\n')
-			str[i] = ' ';
 }
 
 int main()
 {
 	char *input = NULL;
-	size_t len = 0;
+	size_t alloc = 0;
+	int len = 0;
 
-	while( getline( &input, &len, stdin) > 0)
+	while(1)
 	{
-		remove_newline( input);
+		len = getline( &input, &alloc, stdin);
+		if( len <= 0) break;
+
+		input[len] = ' ';
 		
-		valid_meow( input) ? decrypt( input) : encrypt( input);
+		valid_meow( input, len) ? decrypt( input, len) : encrypt( input, len);
 	}
 	
 	free( input); input = NULL;
