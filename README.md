@@ -2,6 +2,10 @@
 encode/decode messages using a made up meow language
 
 # how to use
-`meow -e [message]` - to encode
+to encode, just feed something to it.  
 
-`meow -d [message]` - to decode
+`cat file | meow` - to encode an entire file lol.  
+
+`echo hello world | meow` - to encode a simple message.  
+
+to decode, feed meow text to it.
