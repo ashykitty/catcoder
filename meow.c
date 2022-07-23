@@ -81,7 +81,7 @@ int valid_meow( char *str, size_t len)
 		}	
 
 	}
-	return words % 2 == 0;
+	return words && words % 2 == 0;
 }
 
 void decrypt( char *str, size_t len)
